@@ -67,6 +67,7 @@ class RepLog
         return $this->totalWeightLifted;
     }
 
+    // the total weight lifted is defined by RepLogListener (event:prePersist)
     public function setTotalWeightLifted(float $totalWeightLifted): self
     {
         $this->totalWeightLifted = $totalWeightLifted;
