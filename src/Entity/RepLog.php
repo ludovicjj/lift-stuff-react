@@ -86,4 +86,9 @@ class RepLog
 
         return $this;
     }
+
+    public static function getAllowedLiftItems(): array
+    {
+        return array_keys(self::ALLOWED_LIFT_ITEMS);
+    }
 }
