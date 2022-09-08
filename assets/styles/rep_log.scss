@@ -1,0 +1,65 @@
+@import "variables";
+.card-reps {
+  overflow: hidden;
+  & .card-reps-content {
+    padding: 2rem;
+    & table {
+      margin-bottom: 0;
+      display: flex;
+      flex-flow: column nowrap;
+
+      & tr  {
+        display: flex;
+        & td, & th {
+          flex: 1 0 25%;
+        }
+        & td:last-child, & th:last-child {
+          max-width: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      tbody tr {
+        &:first-child {
+          margin-top: 10px;
+        }
+        margin-bottom: 10px;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.075);
+      }
+      tfoot tr td{
+        border: none;
+      }
+    }
+  }
+  & .card-reps-info {
+    background-color: $main;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+
+    & h6 {
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.67rem;
+      margin-bottom: 2rem;
+    }
+
+    & h2 {
+      letter-spacing: 1px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    & #item-info {
+      color: $white;
+      text-decoration: none;
+    }
+  }
+}

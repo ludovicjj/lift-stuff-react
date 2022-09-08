@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('rep_log') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('rep_log') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-reps">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <div class="col-md-3 card-reps-info">
+                            <div>
+                                <h6>items</h6>
+                                <h2 class="my-2">Your lift history</h2>
+                            </div>
+                            <a href="#" id="item-info">View items info <i class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                        <div class="col-md-9 card-reps-content js-rep-log-table" data-rep-logs="{{ repLogs|e('html_attr') }}">
+                            <div class="table-responsive mb-3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                        <th>What</th>
+                                        <th>How many time</th>
+                                        <th>Weight</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="fw-bold">Total</td>
+                                            <td class="fw-bold js-total-reps">
+                                            </td>
+                                            <td class="fw-bold js-total-weight">
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

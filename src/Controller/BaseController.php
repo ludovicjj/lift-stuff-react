@@ -24,7 +24,7 @@ class BaseController extends AbstractController
         $model = new RepLogModel();
         $model->id = $repLog->getId();
         $model->reps = $repLog->getReps();
-        $model->item = $repLog->getItem();
+        $model->item = $repLog->getItemLabel();
         $model->totalWeightLifted = $repLog->getTotalWeightLifted();
         $model->addLink('self', 'todo url to delete self');
 

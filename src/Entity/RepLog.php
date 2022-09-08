@@ -55,6 +55,15 @@ class RepLog
         return $this->item;
     }
 
+    public function getItemLabel(): string
+    {
+        if (!$this->getItem()) {
+            throw new \LogicException('Item cannot be null');
+        }
+
+        return ucwords(str_replace('_', ' ', $this->getItem()));
+    }
+
     public function setItem(string $item): self
     {
         $this->item = $item;
