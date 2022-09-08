@@ -39,6 +39,7 @@
       border-radius: 50%;
     }
   }
+
   & .card-body {
     display: flex;
     flex-direction: column;
@@ -53,16 +54,13 @@
       & > * {
         flex: 1 1 0;
       }
-      & [type="submit"] {
-        color: $white;
-      }
-      & a:hover {
+      & [type="submit"], & a:hover {
         color: $white;
       }
     }
   }
 }
-/* style for screen >= 992px */
+/* style for screen >= 768px */
 @media (min-width: 768px) {
   .card-login {
     & .card-img {
