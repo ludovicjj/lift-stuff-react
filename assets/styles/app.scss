@@ -1,0 +1,14 @@
+@import "variables";
+@import "~bootstrap";
+
+@font-face {
+    src: url("../fonts/Mulish-VariableFont_wght.ttf");
+    font-family: 'Mulish';
+}
+body {
+    background-color: lightgray;
+    font-family: 'Mulish', sans-serif;
+}
+.container {
+    min-height: 100vh;
+}

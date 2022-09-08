@@ -1,0 +1,84 @@
+@import "variables";
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card-login {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+
+  & .card-img {
+    background-image: url("../images/mais.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 0;
+    padding: 1rem 2rem;
+    display: flex;
+    height: 230px;
+    & .author {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: left;
+      align-items: center;
+      gap: .5rem;
+      align-self: flex-end;
+      font-size: 12px;
+    }
+    & .author_avatar {
+      background-image: url("../images/behelit.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+  & .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    flex: 1 1 0;
+    & h5 {
+      color: $main;
+    }
+    & .card-body-action {
+      gap: 1rem;
+      & > * {
+        flex: 1 1 0;
+      }
+      & [type="submit"] {
+        color: $white;
+      }
+      & a:hover {
+        color: $white;
+      }
+    }
+  }
+}
+/* style for screen >= 992px */
+@media (min-width: 768px) {
+  .card-login {
+    & .card-img {
+      height: 290px;
+    }
+  }
+}
+/* style for screen >= 992px */
+@media (min-width: 992px) {
+  .card-login {
+    flex-direction: row-reverse;
+    height: 790px;
+    & .card-img {
+      flex: 1 1 0;
+      height: 100%;
+      padding: 2rem;
+    }
+  }
+}

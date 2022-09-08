@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="card card-login">
+        <div class="card-img">
+            <div class="author">
+                <span>LudovicJJ</span>
+                <div class="author_avatar"></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title mb-3">Login your account</h5>
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Email:</label>
+                    <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}"/>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" class="form-control" name="_password" autocomplete="off"/>
+                </div>
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
-
-        <button type="submit">login</button>
-    </form>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {# If you want to control the URL the user is redirected to on success
+                <input type="hidden" name="_target_path" value="/account"/> #}
+                <div class="d-flex card-body-action">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <a class="btn btn-outline-primary" href="#" role="button">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
