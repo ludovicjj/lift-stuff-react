@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\RepLogRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RepLogRepository::class)]
 class RepLog
@@ -21,9 +23,19 @@ class RepLog
     private ?int $id = null;
 
     #[ORM\Column]
+    #[
+        Assert\NotBlank(message: "how many times did you lift this ?"),
+        Assert\GreaterThan(value: 0, message: "You can certainly lift more than just 0 !")
+    ]
+    #[Groups(['add_rep_log'])]
     private ?int $reps = null;
 
     #[ORM\Column(length: 50)]
+    #[
+        Assert\NotBlank(message: "What did you lift ?"),
+        Assert\Choice(callback: "getAllowedLiftItems")
+    ]
+    #[Groups(['add_rep_log'])]
     private ?string $item = null;
 
     #[ORM\Column]
