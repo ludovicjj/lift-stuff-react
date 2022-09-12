@@ -100,4 +100,15 @@ class RepLog
     {
         return array_keys(self::ALLOWED_LIFT_ITEMS);
     }
+
+    /** Used for choice value into RepLopType  */
+    public static function getLiftedItemChoices(): array
+    {
+        $items = array_keys(self::ALLOWED_LIFT_ITEMS);
+        $choices = [];
+        foreach($items as $item) {
+            $choices[str_replace('_', ' ', $item)] = $item;
+        }
+        return $choices;
+    }
 }
