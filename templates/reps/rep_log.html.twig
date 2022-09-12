@@ -12,6 +12,7 @@
 
 {% block body %}
     <div class="row">
+        {# Lift history #}
         <div class="col-12">
             <div class="card card-reps">
                 <div class="card-body p-0">
@@ -53,8 +54,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 mt-5">
-            <div class="accordion-container" data-acc="show">
+
+        {# LeaderBoard #}
+        <div class="col-12 mt-5 mb-3">
+            <div class="accordion-container" data-acc-init="show">
                 <button class="accordion-btn">
                     <span>Lift Leader Board</span>
                     <span class="btn-icon"><i class="fa-solid fa-chevron-down"></i></span>

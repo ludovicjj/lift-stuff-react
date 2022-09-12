@@ -63,3 +63,73 @@
     }
   }
 }
+
+/* leaderboard */
+.accordion-container {
+  & .accordion-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: $main;
+    color: $white;
+    border-radius: .375rem;
+    cursor: pointer;
+    border: none;
+    & .btn-icon {
+      transition: transform .3s;
+    }
+  }
+  &[data-acc-init="show"] {
+    .btn-icon {
+      transform: rotate(180deg);
+    }
+    & .accordion-btn {
+      border-radius: .375rem .375rem 0 0;
+    }
+    & .panel-wrapper {
+      border-radius: 0 0 .375rem .375rem;
+      max-height: fit-content;
+    }
+  }
+  & .panel-wrapper {
+    background-color: $white;
+    padding: 0 2rem;
+    transition: max-height .3s ease-out;
+    overflow: hidden;
+    max-height: 0;
+    & .panel {
+      padding: 1rem 0 2rem;
+      & .table-responsive {
+        max-height: 298px;
+      }
+      & table {
+        display: flex;
+        flex-flow: column nowrap;
+        padding-right: 5px;
+        margin-bottom: 0;
+        & tr {
+          display: flex;
+          & th, & td {
+            flex: 1 1 50%;
+          }
+        }
+        & tbody {
+          & tr:first-child {
+            margin-top: 10px;
+          }
+          & tr {
+            background-color: rgba(0, 0, 0, 0.075);
+            border-radius: .5rem;
+            overflow: hidden;
+            margin-bottom: 10px;
+          }
+          & tr:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
