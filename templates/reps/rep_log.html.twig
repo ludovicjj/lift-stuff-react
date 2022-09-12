@@ -53,5 +53,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 mt-5">
+            <div class="accordion-container" data-acc="show">
+                <button class="accordion-btn">
+                    <span>Lift Leader Board</span>
+                    <span class="btn-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="panel-wrapper">
+                    <div class="panel">
+                        <div class="table-responsive">
+                            {{ include('reps/_leadboard.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
 {% endblock %}
