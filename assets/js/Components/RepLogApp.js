@@ -6,10 +6,38 @@ class RepLogApp {
     constructor(wrapper, initialRepLogs) {
         this.wrapper = wrapper;
         this.repLogs = [];
+        this.form = this.wrapper.querySelector(RepLogApp.selector.repLogForm);
 
         for (let repLog of JSON.parse(initialRepLogs)) {
             this._addRow(repLog);
         }
+
+        this.form.addEventListener('submit', this.handleRepLogSubmit.bind(this));
+    }
+
+    static get selector() {
+        return {
+            repLogForm: '.js-new-rep-log-form'
+        }
+    }
+
+    handleRepLogSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(this.form);
+        const formJson = JSON.stringify(Object.fromEntries(formData))
+
+        this._submitRepLog(formJson)
+    }
+
+    _submitRepLog(data) {
+        const url = this.form.getAttribute('action');
+        const headers = new Headers();
+        headers.append("X-Requested-With", "XMLHttpRequest");
+        headers.append("Content-Type", "application/json");
+
+        fetch(url, {method: 'POST', headers, body: data}).then(async Response => {
+
+        })
     }
 
     _addRow(repLog) {
