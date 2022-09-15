@@ -1,3 +1,6 @@
+import Helper from "./RepLogHelper";
+let HelperInstance = new WeakMap();
+
 class RepLogApp {
     /**
      * @param {HTMLElement} wrapper
@@ -6,6 +9,7 @@ class RepLogApp {
     constructor(wrapper, initialRepLogs) {
         this.wrapper = wrapper;
         this.repLogs = [];
+        HelperInstance.set(this, new Helper(this.repLogs));
         this.form = this.wrapper.querySelector(RepLogApp.selector.repLogForm);
 
         for (let repLog of JSON.parse(initialRepLogs)) {
@@ -69,7 +73,14 @@ class RepLogApp {
 
         // store the repLog index into data-key attribute
         row.setAttribute('data-key', (this.repLogs.length - 1).toString());
-        this.wrapper.querySelector('tbody').appendChild(row)
+        this.wrapper.querySelector('tbody').appendChild(row);
+        this._updateTotalWeightAndReps();
+    }
+
+    _updateTotalWeightAndReps() {
+        let {weight, reps} = HelperInstance.get(this).getTotalWeightAndRepsString()
+        this.wrapper.querySelector('.js-total-weight').textContent = weight;
+        this.wrapper.querySelector('.js-total-reps').textContent = reps;
     }
 
     _sendError({message = '', code = 0, errors = []}) {
