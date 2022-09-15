@@ -1,4 +1,5 @@
 import Helper from "./RepLogHelper";
+import Swal from 'sweetalert2'
 let HelperInstance = new WeakMap();
 
 class RepLogApp {
@@ -15,14 +16,66 @@ class RepLogApp {
         for (let repLog of JSON.parse(initialRepLogs)) {
             this._addRow(repLog);
         }
+        this.wrapper
+            .querySelector('tbody')
+            .addEventListener('click', this.handleRepLogDelete.bind(this))
 
         this.form.addEventListener('submit', this.handleRepLogSubmit.bind(this));
     }
 
     static get selector() {
         return {
-            repLogForm: '.js-new-rep-log-form'
+            repLogForm: '.js-new-rep-log-form',
+            repLogDeleteLink: '.js-delete-rep-log'
         }
+    }
+
+    handleRepLogDelete(e) {
+        e.preventDefault();
+        let link = e.target.closest(RepLogApp.selector.repLogDeleteLink);
+        if (link) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Delete',
+                text: 'Are you sure you want to delete this lift ?',
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return this.deleteRepLog(link);
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({title: 'Deleted!', text:'Your lift has been deleted.', icon:'success'})
+                }
+            }).catch(error => {
+                Swal.fire({icon: 'error', title: 'Oops...', text: `Something went wrong! (${error.message})`})
+            })
+        }
+    }
+
+    deleteRepLog(link) {
+        const deleteUrl = link.getAttribute('data-url');
+        const row = link.closest('tr');
+        const icon = link.querySelector('.fa-ban');
+        this._toggleSpinnerToIcon(icon);
+        const headers = new Headers();
+        headers.append("X-Requested-With", "XMLHttpRequest");
+
+        return fetch(deleteUrl, {method: 'DELETE', headers}).then(async response => {
+            if (!response.ok) {
+                let data = await response.json();
+                this._sendError(data);
+            }
+
+            row.classList.add('hide');
+            this.repLogs.splice(parseInt(row.getAttribute('data-key')), 1);
+            this._updateTotalWeightAndReps();
+            setTimeout(() => {
+                row.remove();
+            },500)
+        }).finally(() => {
+            this._toggleSpinnerToIcon(icon);
+        })
     }
 
     handleRepLogSubmit(e) {
@@ -37,9 +90,12 @@ class RepLogApp {
         this._submitRepLog(formJson).then(repLog => {
             this._addRow(repLog);
             this.form.reset();
+            Swal.fire({icon: 'success', title: 'Success', text: 'Your lift have been added with success'})
         }).catch(error => {
             if(error.code === 422) {
                 this._mapErrorsToForm(error.errorsData)
+            } else {
+                Swal.fire({icon: 'error', title: 'Oops...', text: `Something went wrong! (${error.message})`})
             }
         }).finally(() => {
             this._toggleDisabledButton(formSubmitButton);
@@ -130,6 +186,10 @@ class RepLogApp {
                 button.removeAttribute('tabindex');
             }
         }
+    }
+
+    _toggleSpinnerToIcon(icon) {
+        icon.classList.toggle('fa-spin')
     }
 }
 
