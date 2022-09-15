@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\RepLog;
 use App\Entity\User;
 use App\Repository\RepLogRepository;
+use App\Security\RepLogVoter;
 use App\Service\ErrorValidationFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -18,16 +20,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route("/api", name: "lift_")]
 class LiftController extends BaseController
 {
-    #[Route("/reps", name: "list", methods: ['GET'])]
-    public function listRep(): Response
-    {
-        $models = $this->findAllRepLogModels();
-
-        return $this->createApiResponse([
-            'items' => $models
-        ]);
-    }
-
     #[Route("/reps/{id}", name: "get", methods: ['GET'])]
     public function getLift(Request $request, RepLogRepository $repLogRepository): Response
     {
@@ -76,6 +68,33 @@ class LiftController extends BaseController
             );
 
             return $response;
+        }
+
+        return new JsonResponse([
+            'message' => 'Request header X-Requested-With is missing'
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+    #[Route("/reps/{id}", name: "delete", methods: ['DELETE'])]
+    public function deleteLift(
+        Request $request,
+        RepLogRepository $repLogRepository,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+        if ($request->isXmlHttpRequest()) {
+            $this->denyAccessUnlessGranted('ROLE_USER');
+            $repLog = $repLogRepository->find($request->attributes->get('id'));
+
+            if (!$repLog) {
+                throw new NotFoundHttpException("Not found.", null, Response::HTTP_NOT_FOUND);
+            }
+
+            $this->denyAccessUnlessGranted(RepLogVoter::DELETE, $repLog, "You are not allow to do this action");
+
+            $entityManager->remove($repLog);
+            $entityManager->flush();
+            return new JsonResponse(null, Response::HTTP_NO_CONTENT);
         }
 
         return new JsonResponse([
