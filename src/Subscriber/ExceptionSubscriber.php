@@ -2,6 +2,7 @@
 
 namespace App\Subscriber;
 
+use App\Exception\ValidationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -33,9 +34,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
             'message'   => $exception->getMessage(),
             'code'      => $statusCode
         ];
-//        if ($exception instanceof ValidationException) {
-//            $data['errors'] = $exception->getErrors();
-//        }
+
+        if ($exception instanceof ValidationException) {
+            $data['errors'] = $exception->getErrors();
+        }
 
         $event->setResponse(new JsonResponse($data, $statusCode));
     }

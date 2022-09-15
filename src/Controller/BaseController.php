@@ -19,7 +19,7 @@ class BaseController extends AbstractController
     {
     }
 
-    private function buildRepLogModel(RepLog $repLog): RepLogModel
+    protected function buildRepLogModel(RepLog $repLog): RepLogModel
     {
         $model = new RepLogModel();
         $model->id = $repLog->getId();

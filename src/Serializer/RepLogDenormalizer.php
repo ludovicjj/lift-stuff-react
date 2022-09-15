@@ -4,20 +4,12 @@ namespace App\Serializer;
 
 use App\Entity\RepLog;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\Serializer\Exception\CircularReferenceException;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Exception\LogicException;
-
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
-
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
-
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -51,7 +43,7 @@ class RepLogDenormalizer implements DenormalizerInterface, DenormalizerAwareInte
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
 
-    private function convertTypeOrUnset(array &$data, array $typeInfo)
+    private function convertTypeOrUnset(array &$data, array $typeInfo): array
     {
         foreach ($data as $key => $value) {
             $isValidType = $this->isValidType($typeInfo[$key], $value);

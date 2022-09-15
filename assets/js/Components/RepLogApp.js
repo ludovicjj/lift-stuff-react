@@ -24,9 +24,22 @@ class RepLogApp {
     handleRepLogSubmit(e) {
         e.preventDefault();
         const formData = new FormData(this.form);
-        const formJson = JSON.stringify(Object.fromEntries(formData))
+        const formJson = JSON.stringify(Object.fromEntries(formData));
+        const formSubmitButton = this.form.querySelector('button[type="submit"]');
 
-        this._submitRepLog(formJson)
+        this._toggleDisabledButton(formSubmitButton);
+        this._removeFormErrors();
+
+        this._submitRepLog(formJson).then(repLog => {
+            this._addRow(repLog);
+            this.form.reset();
+        }).catch(error => {
+            if(error.code === 422) {
+                this._mapErrorsToForm(error.errorsData)
+            }
+        }).finally(() => {
+            this._toggleDisabledButton(formSubmitButton);
+        })
     }
 
     _submitRepLog(data) {
@@ -35,9 +48,18 @@ class RepLogApp {
         headers.append("X-Requested-With", "XMLHttpRequest");
         headers.append("Content-Type", "application/json");
 
-        fetch(url, {method: 'POST', headers, body: data}).then(async Response => {
+        return fetch(url, {method: 'POST', headers, body: data})
+            .then(async response => {
+                if (!response.ok) {
+                    let data = await response.json();
+                    this._sendError(data)
+                }
 
-        })
+                headers.delete("Content-Type");
+                return fetch(response.headers.get('Location'), {method: 'GET', headers})
+            }).then(async response => {
+                return await response.json();
+            })
     }
 
     _addRow(repLog) {
@@ -48,6 +70,55 @@ class RepLogApp {
         // store the repLog index into data-key attribute
         row.setAttribute('data-key', (this.repLogs.length - 1).toString());
         this.wrapper.querySelector('tbody').appendChild(row)
+    }
+
+    _sendError({message = '', code = 0, errors = []}) {
+        const errorResponse = {
+            type: 'Error',
+            message: message || 'Something went wrong',
+            code: code || 400,
+            errorsData: errors
+        }
+
+        throw (errorResponse);
+    }
+
+    _mapErrorsToForm(errors) {
+        for (let {property, message} of errors) {
+            const field = this.form.querySelector(`[name="${property}"]`)
+
+            if (field) {
+                field.classList.add('is-invalid')
+                const feedBack = document.createElement('div')
+                feedBack.classList.add('invalid-feedback')
+                feedBack.innerText = message
+                field.after(feedBack)
+            }
+        }
+    }
+
+    _removeFormErrors() {
+        const fields = this.form.querySelectorAll('input, select');
+        for (let field of fields) {
+            field.classList.remove('is-invalid');
+            field.parentNode.querySelector('.invalid-feedback')?.remove();
+        }
+    }
+
+    _toggleDisabledButton(button) {
+        button.classList.toggle('disabled');
+        let isButton = button.nodeName === 'BUTTON'
+        if (button.classList.contains('disabled')) {
+            button.setAttribute('aria-disabled', 'true');
+            if (isButton) {
+                button.setAttribute('tabindex', '-1');
+            }
+        } else {
+            button.removeAttribute('aria-disabled');
+            if (isButton) {
+                button.removeAttribute('tabindex');
+            }
+        }
     }
 }
 
