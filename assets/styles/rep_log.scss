@@ -29,6 +29,12 @@
         border-radius: 0.5rem;
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0.075);
+        &.info {
+          border: 1px #4141f6 solid;
+        }
+        & td {
+          border: none;
+        }
       }
       tfoot tr td{
         border: none;

@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
-const el = <h2>Lift Stuff! <span>❤️</span></h2>;
-const root = createRoot(document.getElementById('lift-stuff-app'))
+import RepLogApp from "./RepLog/RepLogApp";
 
-root.render(el);
+const shouldShowHeart = true;
+const root = createRoot(document.getElementById('lift-stuff-app'))
+root.render(<RepLogApp withHeart={shouldShowHeart}/>)
