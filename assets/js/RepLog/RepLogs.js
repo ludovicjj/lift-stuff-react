@@ -2,9 +2,19 @@ import React from "react";
 import RepLogList from "./RepLogList";
 import PropTypes from "prop-types"
 
+function calculateTotalRepsAndWeightLifted(repLogs) {
+    const init = {totalReps: 0, totalWeightLifted: 0}
+    return repLogs.reduce((total, log) => {
+        total.totalReps += log.reps
+        total.totalWeightLifted += log.totalWeightLifted
+        return total;
+    }, init)
+}
+
 export default function RepLogs (props) {
     let heart = "";
     const {withHeart, highlightedRowId, onRowClick, repLogs} = props;
+    const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
 
     if (withHeart) {
         heart = <span>❤️</span>
@@ -41,8 +51,8 @@ export default function RepLogs (props) {
                                     <tfoot>
                                     <tr>
                                         <td className="fw-bold">Total</td>
-                                        <td className="fw-bold">TODO</td>
-                                        <td className="fw-bold">TODO</td>
+                                        <td className="fw-bold">{totalReps}</td>
+                                        <td className="fw-bold">{totalWeightLifted}</td>
                                         <td>&nbsp;</td>
                                     </tr>
                                     </tfoot>
