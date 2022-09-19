@@ -1,13 +1,9 @@
 import React, { Component } from "react";
+import RepLogList from "./RepLogList";
 
 export default class RepLogApp extends Component {
     render() {
         const {withHeart} = this.props;
-        const repLogs = [
-            { id: 1, reps: 25, item: 'My Laptop', totalWeightLifted: 112.5 },
-            { id: 2, reps: 10, item: 'Big Fat Cat', totalWeightLifted: 180 },
-            { id: 8, reps: 4, item: 'Big Fat Cat', totalWeightLifted: 72 }
-        ];
 
         return (
             <div className="col-12">
@@ -15,7 +11,7 @@ export default class RepLogApp extends Component {
                     <div className="card-body p-0">
                         <div className="row g-0">
                             <RepLogCardInfo withHeart={withHeart}/>
-                            <RepLogCardContent repLogs={repLogs}/>
+                            <RepLogCardContent/>
                         </div>
                     </div>
                 </div>
@@ -51,20 +47,7 @@ class RepLogCardContent extends Component {
                             <th>&nbsp;</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {this.props.repLogs.map(repLog => (
-                            <tr
-                                key={repLog.id}
-                                className={highlightedRowId === repLog.id ? 'info' : ''}
-                                onClick={(event) => this.handleRowClick(repLog.id, event)}
-                            >
-                                <td>{repLog.item}</td>
-                                <td>{repLog.reps}</td>
-                                <td>{repLog.totalWeightLifted}</td>
-                                <td>...</td>
-                            </tr>
-                        ))}
-                        </tbody>
+                        <RepLogList highlightedRowId={highlightedRowId}/>
                         <tfoot>
                         <tr>
                             <td className="fw-bold">Total</td>
