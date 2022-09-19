@@ -13,11 +13,16 @@ function calculateTotalRepsAndWeightLifted(repLogs) {
 
 export default function RepLogs (props) {
     let heart = "";
-    const {withHeart, highlightedRowId, onRowClick, repLogs} = props;
+    const {withHeart, highlightedRowId, onRowClick, repLogs, onNewItemSubmit} = props;
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
 
     if (withHeart) {
         heart = <span>❤️</span>
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        onNewItemSubmit('Big Fat Cat', event.target.elements.namedItem('reps').value);
     }
 
     return (
@@ -58,7 +63,7 @@ export default function RepLogs (props) {
                                     </tfoot>
                                 </table>
                             </div>
-                            <form>
+                            <form onSubmit={handleFormSubmit}>
                                 <div className="row">
                                     <div className="col">
                                         <select id="item" name="item" required="required" className="form-select" defaultValue="">
@@ -71,7 +76,8 @@ export default function RepLogs (props) {
                                     </div>
                                     <div className="col">
                                         <input type="number"
-                                               id="reps" name="reps"
+                                               id="reps"
+                                               name="reps"
                                                required="required"
                                                placeholder="How many times?"
                                                className="form-control"
@@ -94,5 +100,6 @@ RepLogs.propTypes = {
     withHeart: PropTypes.bool,
     highlightedRowId: PropTypes.any,
     onRowClick: PropTypes.func.isRequired,
-    repLogs: PropTypes.array.isRequired
+    repLogs: PropTypes.array.isRequired,
+    onNewItemSubmit: PropTypes.func.isRequired
 }
