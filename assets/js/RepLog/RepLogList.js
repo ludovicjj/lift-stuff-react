@@ -8,7 +8,7 @@ export default class RepLogList extends Component {
             { id: 8, reps: 4, item: 'Big Fat Cat', totalWeightLifted: 72 }
         ];
 
-        const {highlightedRowId} = this.props
+        const {highlightedRowId, onRowClick} = this.props
 
         return (
             <tbody>
@@ -16,7 +16,9 @@ export default class RepLogList extends Component {
                 <tr
                     key={repLog.id}
                     className={highlightedRowId === repLog.id ? 'info' : ''}
-                    onClick={(event) => this.handleRowClick(repLog.id, event)}
+                    onClick={() => {
+                        onRowClick(repLog.id)
+                    }}
                 >
                     <td>{repLog.item}</td>
                     <td>{repLog.reps}</td>
