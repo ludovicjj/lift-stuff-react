@@ -14,7 +14,7 @@ function calculateTotalRepsAndWeightLifted(repLogs) {
 
 export default function RepLogs (props) {
     let heart = "";
-    const {withHeart, highlightedRowId, onRowClick, repLogs, onNewItemSubmit} = props;
+    const {withHeart, highlightedRowId, onRowClick, repLogs, onAddRepLog} = props;
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
 
     if (withHeart) {
@@ -59,7 +59,7 @@ export default function RepLogs (props) {
                                     </tfoot>
                                 </table>
                             </div>
-                            <RepLogForm onNewItemSubmit={onNewItemSubmit}/>
+                            <RepLogForm onAddRepLog={onAddRepLog}/>
                         </div>
                     </div>
                 </div>
@@ -73,5 +73,5 @@ RepLogs.propTypes = {
     highlightedRowId: PropTypes.any,
     onRowClick: PropTypes.func.isRequired,
     repLogs: PropTypes.array.isRequired,
-    onNewItemSubmit: PropTypes.func.isRequired
+    onAddRepLog: PropTypes.func.isRequired
 }

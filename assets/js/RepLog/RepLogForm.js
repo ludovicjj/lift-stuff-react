@@ -14,9 +14,9 @@ export default class RepLogForm extends Component{
 
         const quantityInput = this.quantityInput.current;
         const itemSelect = this.itemSelect.current;
-        const {onNewItemSubmit} = this.props;
+        const {onAddRepLog} = this.props;
 
-        onNewItemSubmit(
+        onAddRepLog(
             itemSelect.options[itemSelect.selectedIndex].text,
             quantityInput.value
         );
@@ -63,5 +63,5 @@ export default class RepLogForm extends Component{
 }
 
 RepLogForm.propTypes = {
-    onNewItemSubmit: PropTypes.func.isRequired
+    onAddRepLog: PropTypes.func.isRequired
 }
