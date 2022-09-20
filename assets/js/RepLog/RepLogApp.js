@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RepLogs from "./RepLogs";
 import PropTypes from "prop-types"
+import { v4 as uuid } from 'uuid';
 
 export default class RepLogApp extends Component {
     constructor(props) {
@@ -9,13 +10,14 @@ export default class RepLogApp extends Component {
         this.state = {
             highlightedRowId: null,
             repLogs: [
-                { id: 1, reps: 25, item: 'My Laptop', totalWeightLifted: 112.5 },
-                { id: 2, reps: 10, item: 'Big Fat Cat', totalWeightLifted: 180 },
-                { id: 8, reps: 4, item: 'Big Fat Cat', totalWeightLifted: 72 }
+                { id: uuid(), reps: 25, item: 'My Laptop', totalWeightLifted: 112.5 },
+                { id: uuid(), reps: 10, item: 'Big Fat Cat', totalWeightLifted: 180 },
+                { id: uuid(), reps: 4, item: 'Big Fat Cat', totalWeightLifted: 72 }
             ]
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
+        this.handleNewItemSubmit = this.handleNewItemSubmit.bind(this)
     }
 
     handleRowClick(repLogId) {
@@ -23,8 +25,15 @@ export default class RepLogApp extends Component {
     }
 
     handleNewItemSubmit(itemName, reps) {
-        console.log('TODO - handle this new data');
-        console.log(itemName, reps);
+        const newRepLog = {
+            id: uuid(),
+            reps: parseInt(reps),
+            item: itemName,
+            totalWeightLifted: 50
+        }
+        const repLogs = this.state.repLogs;
+        repLogs.push(newRepLog);
+        this.setState({repLogs: repLogs})
     }
 
     render() {
