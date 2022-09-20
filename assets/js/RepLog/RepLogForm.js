@@ -20,6 +20,10 @@ export default class RepLogForm extends Component{
             itemSelect.options[itemSelect.selectedIndex].text,
             quantityInput.value
         );
+
+        // reset form
+        quantityInput.value = '';
+        itemSelect.selectedIndex = 0;
     }
 
     render() {
