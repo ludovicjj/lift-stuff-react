@@ -31,9 +31,11 @@ export default class RepLogApp extends Component {
             item: itemName,
             totalWeightLifted: 50
         }
-        const repLogs = this.state.repLogs;
-        repLogs.push(newRepLog);
-        this.setState({repLogs: repLogs})
+
+        this.setState((prevState) => {
+            const newRepLogs = [...prevState.repLogs, newRepLog];
+            return {repLogs: newRepLogs}
+        })
     }
 
     render() {
