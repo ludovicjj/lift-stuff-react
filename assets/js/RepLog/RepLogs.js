@@ -1,6 +1,7 @@
 import React from "react";
-import RepLogList from "./RepLogList";
 import PropTypes from "prop-types"
+import RepLogList from "./RepLogList";
+import RepLogForm from "./RepLogForm";
 
 function calculateTotalRepsAndWeightLifted(repLogs) {
     const init = {totalReps: 0, totalWeightLifted: 0}
@@ -18,11 +19,6 @@ export default function RepLogs (props) {
 
     if (withHeart) {
         heart = <span>❤️</span>
-    }
-
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        onNewItemSubmit('Big Fat Cat', event.target.elements.namedItem('reps').value);
     }
 
     return (
@@ -63,31 +59,7 @@ export default function RepLogs (props) {
                                     </tfoot>
                                 </table>
                             </div>
-                            <form onSubmit={handleFormSubmit}>
-                                <div className="row">
-                                    <div className="col">
-                                        <select id="item" name="item" required="required" className="form-select" defaultValue="">
-                                            <option value="">What did you lift ?</option>
-                                            <option value="cat">cat</option>
-                                            <option value="laptop">laptop</option>
-                                            <option value="coffee_cup">coffee cup</option>
-                                            <option value="fat_cat">fat cat</option>
-                                        </select>
-                                    </div>
-                                    <div className="col">
-                                        <input type="number"
-                                               id="reps"
-                                               name="reps"
-                                               required="required"
-                                               placeholder="How many times?"
-                                               className="form-control"
-                                        />
-                                    </div>
-                                    <div className="col">
-                                        <button type="submit" className="btn btn-primary">I Lifted it!</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <RepLogForm onNewItemSubmit={onNewItemSubmit}/>
                         </div>
                     </div>
                 </div>
