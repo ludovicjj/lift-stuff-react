@@ -13,15 +13,23 @@ export default class RepLogApp extends Component {
                 { id: uuid(), reps: 25, item: 'My Laptop', totalWeightLifted: 112.5 },
                 { id: uuid(), reps: 10, item: 'Big Fat Cat', totalWeightLifted: 180 },
                 { id: uuid(), reps: 4, item: 'Big Fat Cat', totalWeightLifted: 72 }
-            ]
+            ],
+            numberOfHeart: 1
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
         this.handleAddRepLog = this.handleAddRepLog.bind(this)
+        this.handleHeartChange = this.handleHeartChange.bind(this)
     }
 
     handleRowClick(repLogId) {
         this.setState({highlightedRowId: repLogId})
+    }
+
+    handleHeartChange(heartCount) {
+        this.setState({
+            numberOfHeart: heartCount
+        })
     }
 
     handleAddRepLog(itemName, reps) {
@@ -45,6 +53,7 @@ export default class RepLogApp extends Component {
                 {...this.state}
                 onRowClick={this.handleRowClick}
                 onAddRepLog={this.handleAddRepLog}
+                onHeartChange={this.handleHeartChange}
             />
         )
     }

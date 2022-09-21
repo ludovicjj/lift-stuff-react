@@ -14,11 +14,11 @@ function calculateTotalRepsAndWeightLifted(repLogs) {
 
 export default function RepLogs (props) {
     let heart = "";
-    const {withHeart, highlightedRowId, onRowClick, repLogs, onAddRepLog} = props;
+    const {withHeart, highlightedRowId, onRowClick, repLogs, onAddRepLog, numberOfHeart, onHeartChange} = props;
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
 
     if (withHeart) {
-        heart = <span>❤️</span>
+        heart = <span>{'💖'.repeat(numberOfHeart)}</span>
     }
 
     return (
@@ -30,6 +30,20 @@ export default function RepLogs (props) {
                             <div>
                                 <h6>items</h6>
                                 <h2 className="my-2">Your lift history {heart}</h2>
+                            </div>
+                            <div>
+                                {/*field controlled by React*/}
+                                <label htmlFor="heartRange" className="form-label">How Many Heart</label>
+                                <input type="range"
+                                       value={numberOfHeart}
+                                       className="form-range"
+                                       id="heartRange"
+                                       min="0"
+                                       max="10"
+                                       onChange={(e) => {
+                                           onHeartChange(+e.target.value)
+                                       }}
+                                />
                             </div>
                             <a href="#" id="item-info">View items info <i className="fa-solid fa-chevron-right"/></a>
                         </div>
@@ -73,5 +87,7 @@ RepLogs.propTypes = {
     highlightedRowId: PropTypes.any,
     onRowClick: PropTypes.func.isRequired,
     repLogs: PropTypes.array.isRequired,
-    onAddRepLog: PropTypes.func.isRequired
+    onAddRepLog: PropTypes.func.isRequired,
+    numberOfHeart: PropTypes.number.isRequired,
+    onHeartChange: PropTypes.func.isRequired
 }
