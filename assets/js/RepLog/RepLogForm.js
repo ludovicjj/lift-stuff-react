@@ -8,6 +8,10 @@ export default class RepLogForm extends Component{
         this.quantityInput = React.createRef();
         this.itemSelect = React.createRef();
 
+        this.state = {
+            quantityInputError: ''
+        }
+
         this.itemOptions = [
             {id: 'cat', text: 'Cat'},
             {id: 'fat_cat', text: 'Big Fat Cat'},
@@ -23,6 +27,14 @@ export default class RepLogForm extends Component{
         const itemSelect = this.itemSelect.current;
         const {onAddRepLog} = this.props;
 
+        if (quantityInput.value <= 0) {
+            this.setState({
+                quantityInputError: "Please entre a value greater than 0"
+            })
+            console.log('Invalid Reps')
+            return;
+        }
+
         onAddRepLog(
             itemSelect.options[itemSelect.selectedIndex].text,
             quantityInput.value
@@ -31,9 +43,14 @@ export default class RepLogForm extends Component{
         // reset form
         quantityInput.value = '';
         itemSelect.selectedIndex = 0;
+
+        this.setState({
+            quantityInputError: ''
+        })
     }
 
     render() {
+        const {quantityInputError} = this.state
         return (
             <form onSubmit={this.handleFormSubmit}>
                 <div className="row">
@@ -56,8 +73,9 @@ export default class RepLogForm extends Component{
                                ref={this.quantityInput}
                                required="required"
                                placeholder="How many times?"
-                               className="form-control"
+                               className={`form-control ${quantityInputError && 'is-invalid'}`}
                         />
+                        {quantityInputError && <div className="invalid-feedback">{quantityInputError}</div>}
                     </div>
                     <div className="col">
                         <button type="submit" className="btn btn-primary">I Lifted it!</button>
