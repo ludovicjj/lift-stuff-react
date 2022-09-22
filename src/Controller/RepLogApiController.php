@@ -34,6 +34,13 @@ class RepLogApiController extends BaseController
         ], Response::HTTP_BAD_REQUEST);
     }
 
+    #[Route("/reps", name: "list", methods: ['GET'])]
+    public function getRepLogs(): Response
+    {
+        $repLogs = $this->findAllRepLogModels();
+        return $this->createApiResponse($repLogs);
+    }
+
     #[Route("/reps", name: "add", methods: ['POST'])]
     public function addRepLog(
         Request $request,
