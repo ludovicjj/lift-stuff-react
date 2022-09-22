@@ -13,7 +13,7 @@
         & td, & th {
           flex: 1 0 25%;
         }
-        & td:last-child, & th:last-child {
+        & td:last-child:not(.loading-row), & th:last-child {
           max-width: 50px;
           display: flex;
           justify-content: center;
