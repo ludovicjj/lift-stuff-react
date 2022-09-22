@@ -17,11 +17,11 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route("/api", name: "lift_")]
-class LiftController extends BaseController
+#[Route("/api", name: "rep_log_")]
+class RepLogApiController extends BaseController
 {
     #[Route("/reps/{id}", name: "get", methods: ['GET'])]
-    public function getLift(Request $request, RepLogRepository $repLogRepository): Response
+    public function getRepLog(Request $request, RepLogRepository $repLogRepository): Response
     {
         if ($request->isXmlHttpRequest()) {
             $repLog = $repLogRepository->find($request->attributes->get('id'));
@@ -35,7 +35,7 @@ class LiftController extends BaseController
     }
 
     #[Route("/reps", name: "add", methods: ['POST'])]
-    public function addLift(
+    public function addRepLog(
         Request $request,
         SerializerInterface $serializer,
         ValidatorInterface $validator,
@@ -64,7 +64,7 @@ class LiftController extends BaseController
             $response = new Response(null, 204);
             $response->headers->set(
                 'Location',
-                $this->generateUrl('lift_get', ['id' => $repLog->getId()])
+                $this->generateUrl('rep_log_get', ['id' => $repLog->getId()])
             );
 
             return $response;
@@ -76,7 +76,7 @@ class LiftController extends BaseController
     }
 
     #[Route("/reps/{id}", name: "delete", methods: ['DELETE'])]
-    public function deleteLift(
+    public function deleteRepLog(
         Request $request,
         RepLogRepository $repLogRepository,
         EntityManagerInterface $entityManager
