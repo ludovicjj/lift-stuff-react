@@ -11,7 +11,8 @@ export default class RepLogApp extends Component {
         this.state = {
             highlightedRowId: null,
             repLogs: [],
-            numberOfHeart: 1
+            numberOfHeart: 1,
+            isLoaded: false
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
@@ -23,7 +24,8 @@ export default class RepLogApp extends Component {
     componentDidMount() {
         getRepLogs().then(data => {
             this.setState({
-                repLogs: data.items
+                repLogs: data.items,
+                isLoaded: true
             })
         })
     }

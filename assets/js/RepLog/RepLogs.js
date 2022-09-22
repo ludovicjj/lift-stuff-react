@@ -22,8 +22,10 @@ export default function RepLogs (props) {
         onAddRepLog,
         numberOfHeart,
         onHeartChange,
-        onDeleteRepLog
+        onDeleteRepLog,
+        isLoaded
     } = props;
+
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
 
     if (withHeart) {
@@ -72,6 +74,7 @@ export default function RepLogs (props) {
                                         onRowClick={onRowClick}
                                         repLogs={repLogs}
                                         onDeleteRepLog={onDeleteRepLog}
+                                        isLoaded={isLoaded}
                                     />
                                     <tfoot>
                                     <tr>
@@ -100,5 +103,6 @@ RepLogs.propTypes = {
     onAddRepLog: PropTypes.func.isRequired,
     numberOfHeart: PropTypes.number.isRequired,
     onHeartChange: PropTypes.func.isRequired,
-    onDeleteRepLog: PropTypes.func.isRequired
+    onDeleteRepLog: PropTypes.func.isRequired,
+    isLoaded: PropTypes.bool.isRequired
 }
