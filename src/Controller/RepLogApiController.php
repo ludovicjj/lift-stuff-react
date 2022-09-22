@@ -38,7 +38,7 @@ class RepLogApiController extends BaseController
     public function getRepLogs(): Response
     {
         $repLogs = $this->findAllRepLogModels();
-        return $this->createApiResponse($repLogs);
+        return $this->createApiResponse(['items' => $repLogs]);
     }
 
     #[Route("/reps", name: "add", methods: ['POST'])]
