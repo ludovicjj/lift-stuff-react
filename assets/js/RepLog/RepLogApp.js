@@ -12,13 +12,15 @@ export default class RepLogApp extends Component {
             repLogs: [],
             numberOfHeart: 1,
             isLoaded: false,
-            isSavingNewRepLog: false
+            isSavingNewRepLog: false,
+            successMessage: ''
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
         this.handleAddRepLog = this.handleAddRepLog.bind(this)
         this.handleHeartChange = this.handleHeartChange.bind(this)
         this.handleDeleteRepLog = this.handleDeleteRepLog.bind(this)
+        this.successTimeout = 0;
     }
 
     componentDidMount() {
@@ -28,6 +30,10 @@ export default class RepLogApp extends Component {
                 isLoaded: true
             })
         })
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.successTimeout)
     }
 
     handleRowClick(repLogId) {
@@ -60,7 +66,22 @@ export default class RepLogApp extends Component {
                     isSavingNewRepLog: false
                 }
             })
+            this.setSuccessMessage('Rep Log added with success !')
         })
+    }
+
+    setSuccessMessage(message) {
+        this.setState({
+            successMessage: message
+        })
+
+        clearTimeout(this.successTimeout)
+        this.successTimeout = setTimeout(() => {
+            this.setState({
+                successMessage: ''
+            })
+            this.successTimeout = 0
+        }, 3000)
     }
 
     handleDeleteRepLog(repLogId) {

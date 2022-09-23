@@ -25,7 +25,8 @@ export default function RepLogs (props) {
         onHeartChange,
         onDeleteRepLog,
         isLoaded,
-        isSavingNewRepLog
+        isSavingNewRepLog,
+        successMessage
     } = props;
 
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
@@ -61,6 +62,11 @@ export default function RepLogs (props) {
                             <a href="#" id="item-info">View items info <i className="fa-solid fa-chevron-right"/></a>
                         </div>
                         <div className="col-md-9 card-reps-content">
+                            {successMessage && (
+                                <div className="alert alert-success text-center">
+                                    {successMessage}
+                                </div>
+                            )}
                             <div className="table-responsive mb-3">
                                 <table className="table table-hover">
                                     <thead>
@@ -108,5 +114,6 @@ RepLogs.propTypes = {
     onHeartChange: PropTypes.func.isRequired,
     onDeleteRepLog: PropTypes.func.isRequired,
     isLoaded: PropTypes.bool.isRequired,
-    isSavingNewRepLog: PropTypes.bool.isRequired
+    isSavingNewRepLog: PropTypes.bool.isRequired,
+    successMessage: PropTypes.string.isRequired
 }

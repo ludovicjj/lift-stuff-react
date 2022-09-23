@@ -46,6 +46,9 @@ export default function RepLogList (props) {
                 <td
                     colSpan="4"
                     className="text-center loading-row"
+                    style={{
+                        opacity: .5
+                    }}
                 >
                     Lifting to the database ...
                 </td>
