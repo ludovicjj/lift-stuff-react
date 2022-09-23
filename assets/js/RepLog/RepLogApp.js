@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import RepLogs from "./RepLogs";
 import PropTypes from "prop-types"
-import { v4 as uuid } from 'uuid';
-import {getRepLogs, deleteRepLog} from "../Api/rep_log_api";
+import {getRepLogs, deleteRepLog, createRepLog, getRepLog} from "../Api/rep_log_api";
 
 export default class RepLogApp extends Component {
     constructor(props) {
@@ -40,17 +39,19 @@ export default class RepLogApp extends Component {
         })
     }
 
-    handleAddRepLog(itemName, reps) {
+    handleAddRepLog(itemValue, reps) {
         const newRepLog = {
-            id: uuid(),
-            reps: parseInt(reps),
-            item: itemName,
-            totalWeightLifted: 50
+            reps: reps,
+            item: itemValue
         }
 
-        this.setState((prevState) => {
-            const newRepLogs = [...prevState.repLogs, newRepLog];
-            return {repLogs: newRepLogs}
+        createRepLog(newRepLog).then(response => {
+            return getRepLog(response.headers.get('Location'))
+        }).then(repLog => {
+            this.setState(prevState => {
+                const newRepLogs = [...prevState.repLogs, repLog];
+                return {repLogs: newRepLogs}
+            })
         })
     }
 

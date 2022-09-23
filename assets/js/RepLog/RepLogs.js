@@ -5,6 +5,7 @@ import RepLogForm from "./RepLogForm";
 
 function calculateTotalRepsAndWeightLifted(repLogs) {
     const init = {totalReps: 0, totalWeightLifted: 0}
+
     return repLogs.reduce((total, log) => {
         total.totalReps += log.reps
         total.totalWeightLifted += log.totalWeightLifted

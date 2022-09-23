@@ -8,6 +8,7 @@ export default function RepLogList (props) {
         event.preventDefault();
         onDeleteRepLog(repLogId)
     }
+
     if (!isLoaded) {
         return (
             <tbody>

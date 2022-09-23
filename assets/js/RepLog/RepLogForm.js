@@ -37,7 +37,7 @@ export default class RepLogForm extends Component{
 
         onAddRepLog(
             itemSelect.options[itemSelect.selectedIndex].text,
-            quantityInput.value
+            +quantityInput.value
         );
 
         // reset form
