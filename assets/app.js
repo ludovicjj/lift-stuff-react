@@ -14,5 +14,10 @@ import 'bootstrap';
 // fontawesome
 import '@fortawesome/fontawesome-free/js/all.js';
 
+// fetch polyfill
+import 'whatwg-fetch';
+// promise polyfill: add a global Promise object
+import 'promise-polyfill/src/polyfill';
+
 // start the Stimulus application
 //import './bootstrap';
