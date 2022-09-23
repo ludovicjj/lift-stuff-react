@@ -24,7 +24,8 @@ export default function RepLogs (props) {
         numberOfHeart,
         onHeartChange,
         onDeleteRepLog,
-        isLoaded
+        isLoaded,
+        isSavingNewRepLog
     } = props;
 
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
@@ -76,6 +77,7 @@ export default function RepLogs (props) {
                                         repLogs={repLogs}
                                         onDeleteRepLog={onDeleteRepLog}
                                         isLoaded={isLoaded}
+                                        isSavingNewRepLog={isSavingNewRepLog}
                                     />
                                     <tfoot>
                                     <tr>
@@ -105,5 +107,6 @@ RepLogs.propTypes = {
     numberOfHeart: PropTypes.number.isRequired,
     onHeartChange: PropTypes.func.isRequired,
     onDeleteRepLog: PropTypes.func.isRequired,
-    isLoaded: PropTypes.bool.isRequired
+    isLoaded: PropTypes.bool.isRequired,
+    isSavingNewRepLog: PropTypes.bool.isRequired
 }
