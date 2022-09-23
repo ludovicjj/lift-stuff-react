@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import RepLogs from "./RepLogs";
 import PropTypes from "prop-types"
 import { v4 as uuid } from 'uuid';
-import {getRepLogs} from "../Api/rep_log_api";
+import {getRepLogs, deleteRepLog} from "../Api/rep_log_api";
 
 export default class RepLogApp extends Component {
     constructor(props) {
@@ -22,9 +22,9 @@ export default class RepLogApp extends Component {
     }
 
     componentDidMount() {
-        getRepLogs().then(data => {
+        getRepLogs().then(repLogs => {
             this.setState({
-                repLogs: data.items,
+                repLogs: repLogs,
                 isLoaded: true
             })
         })
@@ -55,6 +55,8 @@ export default class RepLogApp extends Component {
     }
 
     handleDeleteRepLog(repLogId) {
+        deleteRepLog(repLogId)
+        // TODO check if delete action is success and then update state
         // remove the rep log without mutating state
         this.setState(prevState => {
             return {
