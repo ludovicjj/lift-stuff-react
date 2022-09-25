@@ -51,4 +51,17 @@ class BaseController extends AbstractController
 
         return $models;
     }
+
+    protected function findRepLogModelsPaginated($page, $limit): array
+    {
+        $paginator = $this->repLogRepository->getAllRepLogPaginated($this->getUser(), $page, $limit);
+        $repLogs = iterator_to_array($paginator);
+        $models = [];
+
+        foreach ($repLogs as $repLog) {
+            $models[] = $this->buildRepLogModel($repLog);
+        }
+
+        return $models;
+    }
 }

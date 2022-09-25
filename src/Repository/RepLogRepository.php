@@ -6,6 +6,7 @@ use App\Entity\RepLog;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -50,6 +51,18 @@ class RepLogRepository extends ServiceEntityRepository
             ->orderBy('weight_sum', 'DESC')
             ->getQuery()
             ->execute();
+    }
+
+    public function getAllRepLogPaginated($user, $page, $limit): Paginator
+    {
+        $offset = ($page - 1) * $limit;
+        $queryBuilder = $this->createQueryBuilder('rl')
+            ->andWhere('rl.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('rl.id', 'ASC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+        return new Paginator($queryBuilder);
     }
 
 //    /**
