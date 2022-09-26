@@ -14,14 +14,7 @@ export default class RepLogApp extends Component {
             isLoaded: false,
             isSavingNewRepLog: false,
             successMessage: '',
-            newRepLogValidationErrorMessage: '',
-            itemOptions: [
-                {id: 'cat', text: 'Cat'},
-                {id: 'fat_cat', text: 'Big Fat Cat'},
-                {id: 'laptop', text: 'My Laptop'},
-                {id: 'coffee_cup', text: 'Coffee Cup'},
-                {id: 'invalid_item', text: 'Bad item'}
-            ]
+            newRepLogValidationErrorMessage: ''
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
@@ -147,7 +140,10 @@ export default class RepLogApp extends Component {
         )
     }
 }
-
+RepLogApp.defaultProps = {
+    itemOptions: []
+}
 RepLogApp.propTypes = {
-    withHeart: PropTypes.bool
+    withHeart: PropTypes.bool,
+    itemOptions: PropTypes.array
 }
