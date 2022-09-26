@@ -24,8 +24,10 @@ export default function RepLogList (props) {
             <tr
                 key={repLog.id}
                 className={highlightedRowId === repLog.id ? 'info' : ''}
-                onClick={() => {
-                    onRowClick(repLog.id)
+                onClick={(event) => {
+                    if (['TR', 'TD'].includes(event.target.nodeName)) {
+                        onRowClick(repLog.id)
+                    }
                 }}
                 style={{
                     opacity: repLog.isDeleting ? .3 : 1

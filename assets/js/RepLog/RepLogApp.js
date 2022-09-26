@@ -99,7 +99,7 @@ export default class RepLogApp extends Component {
                 })
             }
         })
-
+        return;
         deleteRepLog(repLogId).then(() => {
             // remove the rep log without mutating state
             this.setState(prevState => {
