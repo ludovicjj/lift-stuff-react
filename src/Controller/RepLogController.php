@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\RepLog;
 use App\Form\Type\RepLogType;
 use App\Repository\RepLogRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,22 @@ class RepLogController extends BaseController
         $leadBoard = $this->getLeadBoard($repLogRepository);
         $form = $this->createForm(RepLogType::class);
 
+        $repLogAppProps = [
+            'itemOptions' => [],
+            'withHeart' => true
+        ];
+        foreach (RepLog::getLiftedItemChoices() as $label => $id) {
+            $repLogAppProps['itemOptions'][] = [
+                'id' => $id,
+                'label' => ucwords($label)
+            ];
+        }
+
         return $this->render('reps/rep_log.html.twig', [
             'repLogs' => $repLogs,
             'leadBoard' => $leadBoard,
-            'formLift' => $form->createView()
+            'formLift' => $form->createView(),
+            'repLogAppProps' => $repLogAppProps
         ]);
     }
 
