@@ -85,13 +85,15 @@ export default class RepLogApp extends Component {
     }
 
     handleDeleteRepLog(repLogId) {
-        deleteRepLog(repLogId)
-        // TODO check if delete action is success and then update state
-        // remove the rep log without mutating state
-        this.setState(prevState => {
-            return {
-                repLogs: prevState.repLogs.filter(repLog => repLog.id !== repLogId)
-            }
+        deleteRepLog(repLogId).then(() => {
+            // remove the rep log without mutating state
+            this.setState(prevState => {
+                return {
+                    repLogs: prevState.repLogs.filter(repLog => repLog.id !== repLogId)
+                }
+            })
+            // Success message
+            this.setSuccessMessage('Rep Log deleted with success !')
         })
     }
 
