@@ -33,7 +33,7 @@ class RepLog
     #[ORM\Column(length: 50)]
     #[
         Assert\NotBlank(message: "What did you lift ?"),
-        Assert\Choice(callback: "getAllowedLiftItems")
+        Assert\Choice(callback: "getAllowedLiftItems", message: "Please lift something that is understood by our scientists.")
     ]
     #[Groups(['add_rep_log'])]
     private ?string $item = null;
