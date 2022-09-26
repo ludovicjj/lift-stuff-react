@@ -46,6 +46,7 @@ export default class RepLogForm extends Component{
     render() {
         const {quantityInputError} = this.state
         const {validationErrorMessage, itemOptions} = this.props
+
         return (
             <form onSubmit={this.handleFormSubmit}>
                 {validationErrorMessage && (
@@ -63,7 +64,7 @@ export default class RepLogForm extends Component{
                         >
                             <option value="">What did you lift ?</option>
                             {itemOptions.map(option => (
-                                 <option key={option.id} value={option.id}>{option.text}</option>
+                                 <option key={option.id} value={option.id}>{option.label}</option>
                             ))}
                         </select>
                     </div>
