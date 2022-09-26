@@ -21,7 +21,6 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('rep_log', './assets/js/rep_log.js')
     .addEntry('rep_log_react', './assets/js/rep_log_react.js')
     .addStyleEntry('login', './assets/styles/login.scss')
 
