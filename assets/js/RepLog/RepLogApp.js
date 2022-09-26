@@ -68,6 +68,10 @@ export default class RepLogApp extends Component {
                 }
             })
             this.setSuccessMessage('Rep Log added with success !')
+        }).catch(error => {
+            error.response.json().then(errorsData => {
+                console.log(errorsData.errors)
+            })
         })
     }
 
@@ -99,7 +103,7 @@ export default class RepLogApp extends Component {
                 })
             }
         })
-        return;
+
         deleteRepLog(repLogId).then(() => {
             // remove the rep log without mutating state
             this.setState(prevState => {

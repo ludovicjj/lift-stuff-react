@@ -55,6 +55,7 @@ function fetchJson(url, options) {
     return fetch(url, Object.assign({
         credentials: 'same-origin'
     }, options))
+        .then(checkStatus)
         .then(response => {
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.indexOf('application/json') !== -1) {
@@ -63,4 +64,15 @@ function fetchJson(url, options) {
                 return response
             }
         })
+}
+
+function checkStatus(response) {
+    if (response.ok) {
+        return response
+    }
+
+    const error = new Error(response.status)
+    error.response = response
+
+    throw error
 }
