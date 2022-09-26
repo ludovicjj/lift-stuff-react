@@ -13,7 +13,8 @@ export default class RepLogApp extends Component {
             numberOfHeart: 1,
             isLoaded: false,
             isSavingNewRepLog: false,
-            successMessage: ''
+            successMessage: '',
+            newRepLogValidationErrorMessage: ''
         }
 
         this.handleRowClick = this.handleRowClick.bind(this)
@@ -56,6 +57,10 @@ export default class RepLogApp extends Component {
             isSavingNewRepLog: true
         })
 
+        const newState = {
+            isSavingNewRepLog: false
+        }
+
         createRepLog(newRepLog).then(response => {
             return getRepLog(response.headers.get('Location'))
         }).then(repLog => {
@@ -64,13 +69,19 @@ export default class RepLogApp extends Component {
                 const newRepLogs = [...prevState.repLogs, repLog];
                 return {
                     repLogs: newRepLogs,
-                    isSavingNewRepLog: false
+                    newRepLogValidationErrorMessage: '',
+                    ...newState
                 }
             })
             this.setSuccessMessage('Rep Log added with success !')
         }).catch(error => {
             error.response.json().then(errorsData => {
-                console.log(errorsData.errors)
+                const errors = errorsData.errors;
+                const firstError = errors[0]
+                this.setState({
+                    newRepLogValidationErrorMessage: firstError.message,
+                    ...newState
+                })
             })
         })
     }
@@ -92,14 +103,14 @@ export default class RepLogApp extends Component {
     handleDeleteRepLog(repLogId) {
         // Change an object inside an array without mutation
         // map -> return a new array
-        // assign -> return new object
+        // object rest spread -> return new object
         this.setState(prevState => {
             return {
                 repLogs: prevState.repLogs.map(repLog => {
                     if (repLog.id !== repLogId) {
                         return repLog
                     }
-                    return Object.assign({}, repLog, {isDeleting: true})
+                    return {...repLog, isDeleting: true}
                 })
             }
         })

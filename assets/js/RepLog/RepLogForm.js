@@ -52,8 +52,14 @@ export default class RepLogForm extends Component{
 
     render() {
         const {quantityInputError} = this.state
+        const {validationErrorMessage} = this.props
         return (
             <form onSubmit={this.handleFormSubmit}>
+                {validationErrorMessage && (
+                    <div className="alert alert-danger">
+                        {validationErrorMessage}
+                    </div>
+                )}
                 <div className="row">
                     <div className="col">
                         <select id="item"
@@ -88,5 +94,6 @@ export default class RepLogForm extends Component{
 }
 
 RepLogForm.propTypes = {
-    onAddRepLog: PropTypes.func.isRequired
+    onAddRepLog: PropTypes.func.isRequired,
+    validationErrorMessage: PropTypes.string.isRequired
 }

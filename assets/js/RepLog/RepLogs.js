@@ -26,7 +26,8 @@ export default function RepLogs (props) {
         onDeleteRepLog,
         isLoaded,
         isSavingNewRepLog,
-        successMessage
+        successMessage,
+        newRepLogValidationErrorMessage
     } = props;
 
     const {totalReps, totalWeightLifted} = calculateTotalRepsAndWeightLifted(repLogs);
@@ -95,7 +96,10 @@ export default function RepLogs (props) {
                                     </tfoot>
                                 </table>
                             </div>
-                            <RepLogForm onAddRepLog={onAddRepLog}/>
+                            <RepLogForm
+                                onAddRepLog={onAddRepLog}
+                                validationErrorMessage={newRepLogValidationErrorMessage}
+                            />
                         </div>
                     </div>
                 </div>
@@ -115,5 +119,6 @@ RepLogs.propTypes = {
     onDeleteRepLog: PropTypes.func.isRequired,
     isLoaded: PropTypes.bool.isRequired,
     isSavingNewRepLog: PropTypes.bool.isRequired,
-    successMessage: PropTypes.string.isRequired
+    successMessage: PropTypes.string.isRequired,
+    newRepLogValidationErrorMessage: PropTypes.string.isRequired
 }
