@@ -59,6 +59,7 @@ export default class RepLogApp extends Component {
         createRepLog(newRepLog).then(response => {
             return getRepLog(response.headers.get('Location'))
         }).then(repLog => {
+            // Add to an array without mutation
             this.setState(prevState => {
                 const newRepLogs = [...prevState.repLogs, repLog];
                 return {
@@ -85,6 +86,20 @@ export default class RepLogApp extends Component {
     }
 
     handleDeleteRepLog(repLogId) {
+        // Change an object inside an array without mutation
+        // map -> return a new array
+        // assign -> return new object
+        this.setState(prevState => {
+            return {
+                repLogs: prevState.repLogs.map(repLog => {
+                    if (repLog.id !== repLogId) {
+                        return repLog
+                    }
+                    return Object.assign({}, repLog, {isDeleting: true})
+                })
+            }
+        })
+
         deleteRepLog(repLogId).then(() => {
             // remove the rep log without mutating state
             this.setState(prevState => {

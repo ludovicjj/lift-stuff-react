@@ -27,6 +27,9 @@ export default function RepLogList (props) {
                 onClick={() => {
                     onRowClick(repLog.id)
                 }}
+                style={{
+                    opacity: repLog.isDeleting ? .3 : 1
+                }}
             >
                 <td>{repLog.item}</td>
                 <td>{repLog.reps}</td>
