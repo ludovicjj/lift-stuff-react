@@ -12,13 +12,6 @@ export default class RepLogForm extends Component{
             quantityInputError: ''
         }
 
-        this.itemOptions = [
-            {id: 'cat', text: 'Cat'},
-            {id: 'fat_cat', text: 'Big Fat Cat'},
-            {id: 'laptop', text: 'My Laptop'},
-            {id: 'coffee_cup', text: 'Coffee Cup'},
-            {id: 'invalid_item', text: 'Bad item'}
-        ]
     }
 
     handleFormSubmit(event) {
@@ -52,7 +45,7 @@ export default class RepLogForm extends Component{
 
     render() {
         const {quantityInputError} = this.state
-        const {validationErrorMessage} = this.props
+        const {validationErrorMessage, itemOptions} = this.props
         return (
             <form onSubmit={this.handleFormSubmit}>
                 {validationErrorMessage && (
@@ -69,7 +62,7 @@ export default class RepLogForm extends Component{
                                 defaultValue=""
                         >
                             <option value="">What did you lift ?</option>
-                            {this.itemOptions.map(option => (
+                            {itemOptions.map(option => (
                                  <option key={option.id} value={option.id}>{option.text}</option>
                             ))}
                         </select>
@@ -95,5 +88,6 @@ export default class RepLogForm extends Component{
 
 RepLogForm.propTypes = {
     onAddRepLog: PropTypes.func.isRequired,
-    validationErrorMessage: PropTypes.string.isRequired
+    validationErrorMessage: PropTypes.string.isRequired,
+    itemOptions: PropTypes.array.isRequired
 }
