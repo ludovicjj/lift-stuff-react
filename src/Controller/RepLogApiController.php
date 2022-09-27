@@ -8,6 +8,7 @@ use App\Repository\RepLogRepository;
 use App\Security\RepLogVoter;
 use App\Service\ErrorValidationFactory;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route("/api", name: "rep_log_")]
+#[Route("/api", name: "rep_log_", defaults: ["_is_api" => true])]
 class RepLogApiController extends BaseController
 {
     #[Route("/reps/{id}", name: "get", methods: ['GET'])]
@@ -52,11 +53,15 @@ class RepLogApiController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $this->denyAccessUnlessGranted('ROLE_USER');
 
-            // TODO missing hidden field _token: Fail valid csrf token
-            //if (!$this->isCsrfTokenValid('add_rep_log_item', $request->toArray()['_token'] ?? null)) {
-            //    throw new InvalidCsrfTokenException('Invalid CSRF token.');
-            //}
+            $data = json_decode($request->getContent(), true);
+            if ($data === null) {
+                throw new JsonException('Invalid JSON');
+            }
 
+            // TODO missing hidden field _token: Fail valid csrf token
+            if (!$this->isCsrfTokenValid('add_rep_log_token', $request->toArray()['_token'] ?? null)) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+            }
             /** @var RepLog $repLog */
             $repLog = $serializer->deserialize($request->getContent(), RepLog::class, 'json', ['groups' => 'add_rep_log']);
 
