@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\RepLog;
-use App\Form\Type\RepLogType;
 use App\Repository\RepLogRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,6 @@ class RepLogController extends BaseController
         $repLogModel = $this->findAllRepLogModels();
         $repLogs = $serializer->serialize($repLogModel, 'json');
         $leadBoard = $this->getLeadBoard($repLogRepository);
-        $form = $this->createForm(RepLogType::class);
 
         $repLogAppProps = [
             'itemOptions' => [],
@@ -41,7 +39,6 @@ class RepLogController extends BaseController
         return $this->render('reps/rep_log.html.twig', [
             'repLogs' => $repLogs,
             'leadBoard' => $leadBoard,
-            'formLift' => $form->createView(),
             'repLogAppProps' => $repLogAppProps
         ]);
     }
