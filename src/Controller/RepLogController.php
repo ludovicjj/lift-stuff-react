@@ -8,13 +8,18 @@ use App\Repository\RepLogRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class RepLogController extends BaseController
 {
     #[Route("/", name: "rep_log")]
     #[IsGranted("ROLE_USER")]
-    public function index(SerializerInterface $serializer, RepLogRepository $repLogRepository): Response
+    public function index(
+        SerializerInterface $serializer,
+        RepLogRepository $repLogRepository,
+        CsrfTokenManagerInterface $csrfTokenManager
+    ): Response
     {
         $repLogModel = $this->findAllRepLogModels();
         $repLogs = $serializer->serialize($repLogModel, 'json');
@@ -23,7 +28,8 @@ class RepLogController extends BaseController
 
         $repLogAppProps = [
             'itemOptions' => [],
-            'withHeart' => true
+            'withHeart' => true,
+            'token' => $csrfTokenManager->getToken('add_rep_log_token')->getValue()
         ];
         foreach (RepLog::getLiftedItemChoices() as $label => $id) {
             $repLogAppProps['itemOptions'][] = [
