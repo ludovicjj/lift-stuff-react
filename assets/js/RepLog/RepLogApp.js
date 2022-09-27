@@ -129,6 +129,19 @@ export default class RepLogApp extends Component {
             })
             // Success message
             this.setSuccessMessage('Rep Log deleted with success !')
+        }).catch(error => {
+            console.log(error.response);
+            this.setState(prevState => {
+                return {
+                    repLogs: prevState.repLogs.map(repLog => {
+                        if (repLog.id !== repLogId) {
+                            return repLog
+                        }
+                        const {isDeleting, ...otherRepLogProp} = repLog
+                        return {...otherRepLogProp}
+                    })
+                }
+            })
         })
     }
 
