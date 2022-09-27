@@ -50,7 +50,8 @@ export default class RepLogApp extends Component {
     handleAddRepLog(itemValue, reps) {
         const newRepLog = {
             reps: reps,
-            item: itemValue
+            item: itemValue,
+            _token: this.props.token
         }
 
         this.setState({
@@ -76,10 +77,14 @@ export default class RepLogApp extends Component {
             this.setSuccessMessage('Rep Log added with success !')
         }).catch(error => {
             error.response.json().then(errorsData => {
-                const errors = errorsData.errors;
-                const firstError = errors[0]
+                let firstError = '';
+                if (error.response.statusCode === 422) {
+                    firstError = errorsData.errors[0].message
+                } else {
+                    firstError = errorsData.message
+                }
                 this.setState({
-                    newRepLogValidationErrorMessage: firstError.message,
+                    newRepLogValidationErrorMessage: firstError,
                     ...newState
                 })
             })
@@ -141,9 +146,11 @@ export default class RepLogApp extends Component {
     }
 }
 RepLogApp.defaultProps = {
-    itemOptions: []
+    itemOptions: [],
+    token: ''
 }
 RepLogApp.propTypes = {
     withHeart: PropTypes.bool,
-    itemOptions: PropTypes.array
+    itemOptions: PropTypes.array,
+    token: PropTypes.string
 }
