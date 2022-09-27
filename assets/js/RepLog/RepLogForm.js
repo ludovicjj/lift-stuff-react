@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types"
+import Button from "../Components/Button";
 
 export default class RepLogForm extends Component{
     constructor(props) {
@@ -79,7 +80,7 @@ export default class RepLogForm extends Component{
                         {quantityInputError && <div className="invalid-feedback">{quantityInputError}</div>}
                     </div>
                     <div className="col">
-                        <button type="submit" className="btn btn-primary">I Lifted it!</button>
+                        <Button type="submit" className="btn-primary">I Lifted it!</Button>
                     </div>
                 </div>
             </form>
