@@ -29,7 +29,8 @@ export function deleteRepLog(repLogId) {
     return fetchJson(`/api/reps/${repLogId}`, {
         method: 'DELETE',
         headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
         }
     })
 }
