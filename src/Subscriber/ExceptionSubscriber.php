@@ -20,8 +20,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        $request = $event->getRequest();
-        if ($request->isXmlHttpRequest()) {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        if (str_starts_with($event->getRequest()->getRequestUri(), "/api/reps")) {
             $this->sendJsonResponseException($event);
         }
     }
