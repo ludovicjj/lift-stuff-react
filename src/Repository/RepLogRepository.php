@@ -53,6 +53,21 @@ class RepLogRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function getLeadBoardDetailsDql(): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT SUM(rl.totalWeightLifted) AS weight_sum, u.id AS user_id, u.email AS user_email
+            FROM App\Entity\RepLog rl
+            INNER JOIN rl.user u
+            GROUP BY u.id
+            ORDER BY weight_sum DESC
+            "
+        );
+
+        return $query->getResult();
+    }
+
     public function getAllRepLogPaginated($user, $page, $limit): Paginator
     {
         $offset = ($page - 1) * $limit;
